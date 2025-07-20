@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 const logRoutes = require('./routes/routes'); // Import log routes
 const app = express();
 const PORT = 3001;
@@ -17,8 +18,6 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // All routes defined in logRoutes.js will be prefixed with '/logs'
 // app.options('*', cors());
 app.use('/logs', logRoutes);
-
-const path = require('path');
 
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, '../client/dist')));
