@@ -18,6 +18,16 @@ app.use(bodyParser.json()); // Parse JSON request bodies
 // app.options('*', cors());
 app.use('/logs', logRoutes);
 
+const path = require('path');
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, '../client/dist')));
+
+// Serve index.html for any other route (SPA)
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
+});
+
 // Start the Server
 app.listen(PORT, () => {
     console.log(`Log System Backend listening at http://localhost:${PORT}`);
@@ -27,17 +37,3 @@ app.listen(PORT, () => {
     console.log(`  PUT    http://localhost:${PORT}/logs/:id`);
     console.log(`  DELETE http://localhost:${PORT}/logs/:id`);
 });
-
-// const express = require('express');
-// const app = express();
-//
-// // ZERO middleware - тільки чистий Express
-// app.get('/logs', (req, res) => {
-//     console.log('GET /logs called directly');
-//     res.json({ message: 'Working without any middleware' });
-// });
-//
-// app.listen(3001, () => {
-//     console.log('Super minimal server on :5000');
-//     console.log('Try: http://localhost:3001/logs');
-// });
